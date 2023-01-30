@@ -1,19 +1,10 @@
-name: Pull Request To Main
-run-name: Run All Tests
+name: Pull Request To Dev
+run-name: Run Integration Tests
 on:
   pull_request:
     branches:
-      - 'main'
+      - 'dev'
 jobs:
-  unit_testing:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Unit Tests
-        run: |
-          chmod +x ./test/unit-tests.sh
-          ./test/unit-tests.sh
   integration_testing:
     runs-on: ubuntu-latest
     container: python:3.10.9-slim
@@ -46,13 +37,3 @@ jobs:
           else
           echo "Integration Test PASS"
           fi
-  mega_hard_testing:
-    needs: [unit_testing, integration_testing]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Mega Hard Tests
-        run: |
-          chmod +x ./test/all-mega-hard-tests.sh
-          ./test/all-mega-hard-tests.sh
